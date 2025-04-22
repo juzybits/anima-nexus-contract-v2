@@ -216,7 +216,7 @@ fun mint__mint(
     runner: &mut TestRunner,
     phase: &mut Phase<DevNft>,
     quantity: u64,
-    pay_coin: &mut Coin<SUI>,
+    pay_coin: Coin<SUI>,
 ) {
     let random = &runner.random;
     let clock = &runner.clock;
@@ -235,7 +235,7 @@ fun mint__wl_mint(
     runner: &mut TestRunner,
     phase: &mut Phase<DevNft>,
     quantity: u64,
-    pay_coin: &mut Coin<SUI>,
+    pay_coin: Coin<SUI>,
     whitelists: vector<Whitelist>,
 ) {
     mint::wl_mint(
@@ -258,9 +258,8 @@ fun mint__mint__with_new_sui(
 ) {
     runner.scen.next_tx(sender);
     let mut phase: Phase<DevNft> = runner.scen.take_shared();
-    let mut pay_coin = runner.mint_coin<SUI>(quantity * item_price);
-    runner.mint__mint(&mut phase, quantity, &mut pay_coin);
-    transfer::public_transfer(pay_coin, sender);
+    let pay_coin = runner.mint_coin<SUI>(quantity * item_price);
+    runner.mint__mint(&mut phase, quantity, pay_coin);
 
     scen::return_shared(phase);
     runner.scen.next_tx(sender);
@@ -275,9 +274,8 @@ fun mint__wl_mint__with_new_sui(
 ) {
     runner.scen.next_tx(sender);
     let mut phase: Phase<DevNft> = runner.scen.take_shared();
-    let mut pay_coin = runner.mint_coin<SUI>(quantity * item_price);
-    runner.mint__wl_mint(&mut phase, quantity, &mut pay_coin, wls);
-    transfer::public_transfer(pay_coin, sender);
+    let pay_coin = runner.mint_coin<SUI>(quantity * item_price);
+    runner.mint__wl_mint(&mut phase, quantity, pay_coin, wls);
 
     scen::return_shared(phase);
     runner.scen.next_tx(sender);
@@ -287,7 +285,7 @@ fun mint__mint_and_place(
     runner: &mut TestRunner,
     phase: &mut Phase<DevNft>,
     quantity: u64,
-    pay_coin: &mut Coin<SUI>,
+    pay_coin: Coin<SUI>,
 ) {
     let random = &runner.random;
     let clock = &runner.clock;
@@ -310,9 +308,8 @@ fun mint__mint_and_place__with_new_sui(
 ) {
     runner.scen.next_tx(sender);
     let mut phase: Phase<DevNft> = runner.scen.take_shared();
-    let mut pay_coin = runner.mint_coin<SUI>(quantity * item_price);
-    runner.mint__mint_and_place(&mut phase, quantity, &mut pay_coin);
-    transfer::public_transfer(pay_coin, sender);
+    let pay_coin = runner.mint_coin<SUI>(quantity * item_price);
+    runner.mint__mint_and_place(&mut phase, quantity, pay_coin);
 
     scen::return_shared(phase);
     runner.scen.next_tx(sender);
@@ -571,9 +568,8 @@ fun test_mint_e_incorrect_whitelist_for_phase()
 
     // try to use whitelist from phase1 in phase2
     let mut phase2 = runner.scen.take_shared_by_id<Phase<DevNft>>(phase2_id);
-    let mut pay_coin = runner.mint_coin<SUI>(ITEM_PRICE);
-    runner.mint__wl_mint(&mut phase2, 1, &mut pay_coin, vector[wl1]);
-    transfer::public_transfer(pay_coin, USER_1);
+    let pay_coin = runner.mint_coin<SUI>(ITEM_PRICE);
+    runner.mint__wl_mint(&mut phase2, 1, pay_coin, vector[wl1]);
 
     destroy(phase2);
     destroy(runner);

@@ -73,9 +73,9 @@ fun test_kiosk_none()
 {
     let mut runner = begin(ADMIN);
 
-    dev_setup(
+    dev_setup<SUI>(
         &runner.publisher,
-        1_000_000_000, // item_price_sui
+        1_000_000_000, // item_price
         15, // launch_total_supply
         5, // phase_max_mint_allocation
         10, // phase_max_mint_count
@@ -113,9 +113,9 @@ fun test_kiosk_place()
 {
     let mut runner = begin(ADMIN);
 
-    dev_setup(
+    dev_setup<SUI>(
         &runner.publisher,
-        1_000_000_000, // item_price_sui
+        1_000_000_000, // item_price
         15, // launch_total_supply
         5, // phase_max_mint_allocation
         10, // phase_max_mint_count
@@ -159,9 +159,9 @@ fun test_kiosk_none_wl()
 {
     let mut runner = begin(ADMIN);
 
-    dev_setup(
+    dev_setup<SUI>(
         &runner.publisher,
-        1_000_000_000, // item_price_sui
+        1_000_000_000, // item_price
         15, // launch_total_supply
         5, // phase_max_mint_allocation
         10, // phase_max_mint_count

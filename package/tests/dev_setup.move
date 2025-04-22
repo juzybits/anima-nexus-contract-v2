@@ -3,7 +3,6 @@ module nexus_launchpad::dev_setup;
 
 use sui::{
     clock::Clock,
-    sui::SUI,
     package::{Publisher},
 };
 use nexus_launchpad::{
@@ -14,9 +13,9 @@ use nexus_launchpad::{
 };
 
 #[allow(lint(self_transfer))]
-public fun dev_setup(
+public fun dev_setup<C>(
     publisher: &Publisher,
-    item_price_sui: u64,
+    item_price: u64,
     launch_total_supply: u64,
     phase_max_mint_allocation: u64,
     phase_max_mint_count: u64,
@@ -78,7 +77,7 @@ public fun dev_setup(
     );
 
     // add payment option
-    phase.add_payment_type<DevNft, SUI>(&launch_operator_cap, item_price_sui);
+    phase.add_payment_type<DevNft, C>(&launch_operator_cap, item_price);
 
     // send whitelist objects to sender
     wl_amount.do!(|_| {

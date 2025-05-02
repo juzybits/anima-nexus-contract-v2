@@ -179,7 +179,6 @@ fun phase__new__default(
         PHASE_MAX_ALLO,
         PHASE_MAX_COUNT,
         PHASE_ALLOW_BULK,
-        clock,
         runner.scen.ctx(),
     );
     runner.clock.increment_for_testing(PHASE_START_TS);
@@ -601,7 +600,6 @@ fun test_schedule_e_phase_max_count_exceeds_launch_supply()
         // try to create a phase with more items than the total launch supply
         LAUNCH_SUPPLY + 1,
         PHASE_ALLOW_BULK,
-        clock,
         runner.scen.ctx(),
     );
 

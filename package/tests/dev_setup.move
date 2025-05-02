@@ -72,7 +72,6 @@ public fun dev_setup<C>(
         phase_max_mint_allocation,
         phase_max_mint_count,
         phase_allow_bulk_mint,
-        clock,
         ctx,
     );
 
